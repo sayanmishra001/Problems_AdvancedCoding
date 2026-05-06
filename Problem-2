@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        long[] arr = new long[n];
+        
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextLong();
+        }
+        
+        long k = sc.nextLong();
+        
+        long mod = arr[0] % k;
+        for (int i = 1; i < n; i++) {
+            if (arr[i] % k != mod) {
+                System.out.println(-1);
+                return;
+            }
+        }
+        
+        long[] b = new long[n];
+        for (int i = 0; i < n; i++) {
+            b[i] = arr[i] / k;
+        }
+        
+        Arrays.sort(b);
+        long median = b[n / 2];
+        
+        long ops = 0;
+        for (int i = 0; i < n; i++) {
+            ops += Math.abs(b[i] - median);
+        }
+        
+        System.out.println(ops);
+    }
+}
