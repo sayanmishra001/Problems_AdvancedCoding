@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main {
+
+    public static int maxCyclicSum(String s) {
+        int n = s.length();
+        String t = s + s;
+
+        Set<Character> used = new HashSet<>();
+        int left = 0;
+        int currSum = 0;
+        int best = 0;
+
+        for (int right = 0; right < t.length(); right++) {
+            while (used.contains(t.charAt(right))) {
+                char ch = t.charAt(left);
+                used.remove(ch);
+                currSum -= (ch - 'a' + 1);
+                left++;
+            }
+
+            char ch = t.charAt(right);
+            used.add(ch);
+            currSum += (ch - 'a' + 1);
+
+            if (right - left + 1 > n) {
+                char leftChar = t.charAt(left);
+                used.remove(leftChar);
+                currSum -= (leftChar - 'a' + 1);
+                left++;
+            }
+
+            if (currSum > best) {
+                best = currSum;
+            }
+        }
+
+        return best;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+        System.out.println(maxCyclicSum(s));
+    }
+}
